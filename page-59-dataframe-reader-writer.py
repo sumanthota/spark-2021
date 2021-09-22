@@ -1,3 +1,5 @@
+# Import SparkSession
+from pyspark.sql import SparkSession
 # In Python, define a schema
 from pyspark.sql.types import *
 # Programmatic way to define a schema
@@ -35,7 +37,13 @@ fire_schema = StructType([StructField('CallNumber', IntegerType(), True),
                           StructField('Delay', FloatType(), True)])
 # Use the DataFrameReader interface to read a CSV file
 sf_fire_file = "gs://wf-ae-hive-staging-prod/test201/LearningSparkV2/databricks-datasets/learning-spark-v2/sf-fire/sf-fire-calls.csv"
+spark = (SparkSession.builder.appName("Example-Page-59").getOrCreate())
 fire_df = spark.read.csv(sf_fire_file, header=True, schema=fire_schema)
 
+# Use the DataFrameWriter interface to write to parquet format
 parquet_path = "gs://wf-ae-hive-staging-prod/test201/sf_fire_incidents/"
 fire_df.write.format("parquet").save(parquet_path)
+
+# In Python
+few_fire_df = (fire_df.select("IncidentNumber", "AvailableDtTm", "CallType").where(col("CallType") != "Medical Incident"))
+few_fire_df.show(5, truncate=False)
