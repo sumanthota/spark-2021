@@ -13,6 +13,6 @@ gcloud dataproc jobs submit pyspark gs://wf-ae-hive-staging-prod/mvenkanna/pyspa
 
 # Submit Hive Job
 
-gcloud dataproc jobs submit hive  --cluster dataproc-managed --region us-central1 --project wf-gcp-us-ae-dataproc-prod -e "select 1"
+gcloud dataproc jobs submit hive  --cluster dataproc-managed --region us-central1 --project wf-gcp-us-ae-dataproc-prod -e "select 100"
 
 gcloud dataproc jobs submit hive  --cluster dataproc-managed --region us-central1 --project wf-gcp-us-ae-dev -e "select 1"
