@@ -34,5 +34,8 @@ fire_schema = StructType([StructField('CallNumber', IntegerType(), True),
                           StructField('RowID', StringType(), True),
                           StructField('Delay', FloatType(), True)])
 # Use the DataFrameReader interface to read a CSV file
-sf_fire_file = "gs://wf-ae-hive-warehouse-prod/tmp/test201/LearningSparkV2/databricks-datasets/learning-spark-v2/sf-fire/sf-fire-calls.csv"
+sf_fire_file = "gs://wf-ae-hive-staging-prod/test201/LearningSparkV2/databricks-datasets/learning-spark-v2/sf-fire/sf-fire-calls.csv"
 fire_df = spark.read.csv(sf_fire_file, header=True, schema=fire_schema)
+
+parquet_path = "gs://wf-ae-hive-staging-prod/test201/sf_fire_incidents/"
+fire_df.write.format("parquet").save(parquet_path)
